@@ -1,6 +1,6 @@
-![PLOT-TWIST](./references/rick-and-morty-plot.jpg)
+![PLOT-SHIFT](./references/rick-and-morty-plot.jpg)
 
-# PLOT-TWIST
+# PLOT-SHIFT
 
 A growing collection of Python utilities for advanced data visualization, with a focus on exploratory data analysis. This project is a personal effort to gather and refine useful plotting functions developed during my data science studies and research.
 
@@ -19,13 +19,13 @@ The goal of this package is to provide reusable, well-documented visualization t
 Install via [PDM](https://pdm.fming.dev/) (recommended):
 
 ```sh
-pdm add plot-twist
+pdm add plot-shift
 ```
 
 Or with pip (after publishing to PyPI):
 
 ```sh
-pip install plot-twist
+pip install plot-shift
 ```
 
 > **Note:** If you are using the code locally (not from PyPI), make sure your `PYTHONPATH` includes the `src/` directory, or install the package in editable mode:
@@ -39,7 +39,7 @@ pip install plot-twist
 Import and use the available plotting functions in your data science projects. Example for clustering visualization:
 
 ```python
-from plot_twist.silhouette_diagram import silhouette_diagram
+from plot_shift.silhouette_diagram import silhouette_diagram
 
 # Example usage:
 silhouette_diagram(

@@ -1,5 +1,5 @@
 [project]
-name = "plot-twist"
+name = "plot-shift"
 version = "0.1.0"
 description = "A Python package for advanced plotting utilities."
 authors = [{ name = "Koen van Esterik", email = "koen@vanesterik.com" }]
@@ -22,14 +22,14 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://pypi.org/project/plot-twist/"
-Repository = "https://github.com/koendirkvanesterik/plot-twist"
+Homepage = "https://pypi.org/project/plot-shift/"
+Repository = "https://github.com/koendirkvanesterik/plot-shift"
 
 [tool.pdm]
 distribution = true
 
 [tool.pdm.build]
-includes = ["src/plot_twist"]
+includes = ["src/plot_shift"]
 
 [build-system]
 requires = ["pdm-backend"]

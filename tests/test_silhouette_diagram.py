@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pytest
 from numpy.typing import NDArray
-
-from plot_twist.silhouette_diagram import silhouette_diagram
+from plot_shift.silhouette_diagram import silhouette_diagram
 
 SampleData = Tuple[int, NDArray[np.int32], NDArray[np.float64], float]
 
