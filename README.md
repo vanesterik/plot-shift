@@ -1,4 +1,4 @@
-![PLOT-SHIFT](./references/rick-and-morty-plot.jpg)
+![PLOT-SHIFT](https://github.com/vanesterik/plot-shift/blob/main/references/rick-and-morty-plot.jpg)
 
 # PLOT-SHIFT
 
@@ -59,7 +59,7 @@ Contributions and suggestions are welcome! If you have a useful plotting functio
 
 ## License
 
-[MIT License](./LICENSE)
+[MIT License](https://github.com/vanesterik/plot-shift/blob/main/LICENSE)
 
 ## Author
 
