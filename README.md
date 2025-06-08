@@ -1,4 +1,4 @@
-![PLOT-SHIFT](https://github.com/vanesterik/plot-shift/blob/main/references/rick-and-morty-plot.jpg)
+![PLOT-SHIFT](https://raw.githubusercontent.com/vanesterik/plot-shift/refs/heads/main/references/rick-and-morty-plot.jpg)
 
 # PLOT-SHIFT
 
