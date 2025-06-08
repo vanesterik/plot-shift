@@ -1,0 +1,75 @@
+[project]
+name = "plot-twist"
+version = "0.1.0"
+description = "A Python package for advanced plotting utilities."
+authors = [{ name = "Koen van Esterik", email = "koen@vanesterik.com" }]
+dependencies = [
+    "matplotlib>=3.10.3",
+    "numpy>=2.2.6",
+    "scikit-learn>=1.6.1",
+]
+requires-python = ">=3.8,<4.0"
+readme = "README.md"
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://pypi.org/project/plot-twist/"
+Repository = "https://github.com/koendirkvanesterik/plot-twist"
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.build]
+includes = ["src/plot_twist"]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[dependency-groups]
+dev = [
+    "autoflake>=2.3.1",
+    "black>=25.1.0",
+    "isort>=6.0.1",
+    "jupyter>=1.1.1",
+    "mypy>=1.15.0",
+    "pytest-ruff>=0.4.1",
+    "pytest>=8.3.5",
+    "ruff>=0.11.11",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.isort]
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+profile = "black"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+strict = true
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+exclude = [".venv", "build", "dist"]
+
+[tool.pytest-ruff]
+addopts = "--ruff"
