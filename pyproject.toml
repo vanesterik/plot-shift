@@ -1,6 +1,6 @@
 [project]
 name = "plot-shift"
-version = "0.1.2"
+version = "0.1.3"
 description = "A Python package for advanced plotting utilities."
 authors = [{ name = "Koen van Esterik", email = "koen@vanesterik.com" }]
 dependencies = [
