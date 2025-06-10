@@ -8,7 +8,7 @@ from numpy.typing import NDArray
 def silhouette_diagram(
     k: int,
     y_pred: NDArray[np.int32],
-    silhouette_coefficients: NDArray[np.float64],
+    silhouette_coefficients: NDArray[np.float32],
     silhouette_score: float,
     ax: Axes,
 ) -> None:
@@ -23,7 +23,7 @@ def silhouette_diagram(
     y_pred : NDArray[np.int32]
         Cluster labels for each sample.
 
-    silhouette_coefficients : NDArray[np.float64]
+    silhouette_coefficients : NDArray[np.float32]
         Silhouette coefficients for each sample.
 
     silhouette_score : float
