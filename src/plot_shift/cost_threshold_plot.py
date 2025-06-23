@@ -28,8 +28,8 @@ def cost_threshold_plot(
 
     """
 
-    min_cost_index = np.argmin(total_costs)
-    optimal_threshold = thresholds[min_cost_index]
+    minimum_cost_index = np.argmin(total_costs)
+    optimal_threshold = thresholds[minimum_cost_index]
 
     ax.plot(
         thresholds,
@@ -58,13 +58,6 @@ def cost_threshold_plot(
     else:
         ax.set_title("Costs vs. Thresholds")
 
-    ax.annotate(
-        f"Minimal expected costs: {total_costs[min_cost_index]:.2f}",
-        xy=(optimal_threshold, total_costs[min_cost_index]),
-        xytext=(optimal_threshold + 0.1, total_costs[min_cost_index]),
-        arrowprops=dict(facecolor="black", shrink=0.05),
-        bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=0.5),
-    )
     ax.set_xlabel("Threshold")
     ax.set_ylabel("Cost")
     ax.legend()
@@ -134,3 +127,45 @@ def binary_classifier_curve(
     thresholds = y_score[threshold_idxs]
 
     return tps, fps, fns, thresholds
+
+
+def calculate_threshold_costs(
+    false_positives: NDArray[np.int32],
+    false_negatives: NDArray[np.int32],
+    C_FP: int = 1,
+    C_FN: int = 1,
+) -> Tuple[NDArray[np.int32], np.int32]:
+    """
+    Compute the total costs for each threshold and find the minimal cost.
+
+    Parameters
+    ----------
+    false_positives : NDArray[np.int32]
+        Array containing the number of false positives for each threshold.
+
+    false_negatives : NDArray[np.int32]
+        Array containing the number of false negatives for each threshold.
+
+    C_FP : int, optional
+        Cost assigned to a false positive (default: 1).
+
+    C_FN : int, optional
+        Cost assigned to a false negative (default: 1).
+
+    Returns
+    -------
+    total_costs : NDArray[np.int32]
+        Array with total costs for each threshold.
+
+    minimal_costs : np.int32
+        The minimal total cost across all thresholds.
+
+    """
+    # Calculate the total costs for each threshold
+    total_costs = C_FP * false_positives + C_FN * false_negatives
+    # Define the minimal expected costs as the minimum of the total costs
+    # across all thresholds
+    minimum_cost_index = np.argmin(total_costs)
+    minimal_costs = total_costs[minimum_cost_index]
+
+    return (total_costs, minimal_costs)
