@@ -221,7 +221,7 @@ def calculate_profit_thresholds(
         Recall at the optimal threshold.
     """
     # Calculate the total profit for each threshold
-    profits = (revenue_tp * tps + revenue_tn * tns) - (cost_fp * fps - cost_fn * fns)
+    profits = (revenue_tp * tps + revenue_tn * tns) - (cost_fp * fps + cost_fn * fns)
     # Calculate the total profit for each threshold and identify the threshold
     # with the maximum profit
     maximum_profit_index = np.argmax(profits)
@@ -239,14 +239,20 @@ def calculate_profit_thresholds(
     calibrated_optimal_threshold = (cost_fp + revenue_tn) / (
         (cost_fp + revenue_tn) + (revenue_tp - cost_fn)
     )
-    calibrated_maximum_profit = profits[
-        np.searchsorted(
-            -thresholds,
-            -calibrated_optimal_threshold,
-            side="right",
-        )
-        - 1
-    ]
+    # Ensure the index is within valid bounds
+    calibrated_maximum_profit_index = np.clip(
+        (
+            np.searchsorted(
+                -thresholds,
+                -calibrated_optimal_threshold,
+                side="right",
+            )
+            - 1
+        ),
+        0,
+        len(thresholds) - 1,
+    )
+    calibrated_maximum_profit = profits[calibrated_maximum_profit_index]
 
     return (
         thresholds,
