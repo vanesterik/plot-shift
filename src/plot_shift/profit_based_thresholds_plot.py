@@ -152,17 +152,17 @@ def calculate_profit_thresholds(
     cost_fp: int = 1,
     cost_fn: int = 1,
 ) -> Tuple[
+    int,
+    int,
+    float,
+    float,
     NDArray[np.int32],
-    int,
     float,
     float,
-    float,
-    float,
-    int,
 ]:
     """
     Compute the total profit for each threshold and find the maximum profit and
-    corresponding threshold.
+    corresponding threshold, as well as related metrics.
 
     Parameters
     ----------
@@ -181,31 +181,47 @@ def calculate_profit_thresholds(
     thresholds : NDArray[np.float32]
         Array of threshold values.
 
-    revenue : int, optional
-        Revenue assigned to a true positive or false negative (default: 1).
+    revenue_tp : int, optional
+        Revenue assigned to a true positive (default: 10).
 
-    cost : int, optional
-        Cost assigned to each prediction (default: 1).
+    revenue_tn : int, optional
+        Revenue assigned to a true negative (default: 0).
+
+    cost_fp : int, optional
+        Cost assigned to a false positive (default: 1).
+
+    cost_fn : int, optional
+        Cost assigned to a false negative (default: 1).
 
     Returns
     -------
-    total_profit : NDArray[np.int32]
-        Array with total profit for each threshold.
-
-    maximum_profit : np.int32
+    maximum_profit : int
         The maximum profit across all thresholds.
 
-    optimal_threshold : np.float32
+    calibrated_maximum_profit : int
+        The profit at the calibrated optimal threshold.
+
+    optimal_threshold : float
         The threshold corresponding to the maximum profit.
+
+    calibrated_optimal_threshold : float
+        The threshold that balances costs and revenues.
+
+    profits : NDArray[np.int32]
+        Array with total profit for each threshold.
+
+    precision : float
+        Precision at the optimal threshold.
+
+    recall : float
+        Recall at the optimal threshold.
     """
     # Calculate the total profit for each threshold
-    total_profit = (revenue_tp * tps + revenue_tn * tns) - (
-        cost_fp * fps - cost_fn * fns
-    )
+    profits = (revenue_tp * tps + revenue_tn * tns) - (cost_fp * fps - cost_fn * fns)
     # Calculate the total profit for each threshold and identify the threshold
     # with the maximum profit
-    maximum_profit_index = np.argmax(total_profit)
-    maximum_profit = total_profit[maximum_profit_index]
+    maximum_profit_index = np.argmax(profits)
+    maximum_profit = profits[maximum_profit_index]
     optimal_threshold = thresholds[maximum_profit_index]
     # Calculate precision and recall at the optimal threshold
     tp = tps[maximum_profit_index]
@@ -219,7 +235,7 @@ def calculate_profit_thresholds(
     calibrated_optimal_threshold = (cost_fp + revenue_tn) / (
         (cost_fp + revenue_tn) + (revenue_tp - cost_fn)
     )
-    calibrated_total_profit = total_profit[
+    calibrated_maximum_profit = profits[
         np.searchsorted(
             -thresholds,
             -calibrated_optimal_threshold,
@@ -229,11 +245,11 @@ def calculate_profit_thresholds(
     ]
 
     return (
-        total_profit,
         int(maximum_profit),
+        int(calibrated_maximum_profit),
         float(optimal_threshold),
+        float(calibrated_optimal_threshold),
+        profits,
         float(precision),
         float(recall),
-        float(calibrated_optimal_threshold),
-        int(calibrated_total_profit),
     )
