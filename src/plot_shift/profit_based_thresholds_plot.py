@@ -152,11 +152,12 @@ def calculate_profit_thresholds(
     cost_fp: int = 1,
     cost_fn: int = 1,
 ) -> Tuple[
-    int,
-    int,
-    float,
-    float,
+    NDArray[np.float32],
     NDArray[np.int32],
+    int,
+    int,
+    float,
+    float,
     float,
     float,
 ]:
@@ -195,6 +196,12 @@ def calculate_profit_thresholds(
 
     Returns
     -------
+    thresholds : NDArray[np.float32]
+        Array of threshold values.
+
+    profits : NDArray[np.int32]
+        Array with total profit for each threshold.
+
     maximum_profit : int
         The maximum profit across all thresholds.
 
@@ -206,9 +213,6 @@ def calculate_profit_thresholds(
 
     calibrated_optimal_threshold : float
         The threshold that balances costs and revenues.
-
-    profits : NDArray[np.int32]
-        Array with total profit for each threshold.
 
     precision : float
         Precision at the optimal threshold.
@@ -245,11 +249,12 @@ def calculate_profit_thresholds(
     ]
 
     return (
+        thresholds,
+        profits,
         int(maximum_profit),
         int(calibrated_maximum_profit),
         float(optimal_threshold),
         float(calibrated_optimal_threshold),
-        profits,
         float(precision),
         float(recall),
     )

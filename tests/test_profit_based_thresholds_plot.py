@@ -82,21 +82,23 @@ def test_calculate_profit_thresholds_basic() -> None:
     thresholds = np.array([0.9, 0.5, 0.1], dtype=np.float32)
     result = calculate_profit_thresholds(tps, fns, fps, tns, thresholds)
     (
+        thresholds_out,
+        profits,
         maximum_profit,
         calibrated_maximum_profit,
         optimal_threshold,
         calibrated_optimal_threshold,
-        total_profit,
         precision,
         recall,
     ) = result
-    assert isinstance(total_profit, np.ndarray)
+    assert isinstance(thresholds_out, np.ndarray)
+    assert isinstance(profits, np.ndarray)
     assert isinstance(maximum_profit, int)
+    assert isinstance(calibrated_maximum_profit, int)
     assert isinstance(optimal_threshold, float)
+    assert isinstance(calibrated_optimal_threshold, float)
     assert 0 <= precision <= 1
     assert 0 <= recall <= 1
-    assert isinstance(calibrated_optimal_threshold, float)
-    assert isinstance(calibrated_maximum_profit, int)
 
 
 def test_calculate_profit_thresholds_custom_params() -> None:
@@ -109,15 +111,17 @@ def test_calculate_profit_thresholds_custom_params() -> None:
         tps, fns, fps, tns, thresholds, revenue_tp=5, revenue_tn=2, cost_fp=3, cost_fn=4
     )
     (
+        thresholds_out,
+        profits,
         maximum_profit,
         calibrated_maximum_profit,
         optimal_threshold,
         calibrated_optimal_threshold,
-        total_profit,
         precision,
         recall,
     ) = result
-    assert total_profit.shape == tps.shape
+    assert thresholds_out.shape == tps.shape
+    assert profits.shape == tps.shape
     assert isinstance(maximum_profit, int)
     assert isinstance(optimal_threshold, float)
     assert isinstance(calibrated_maximum_profit, int)
@@ -133,15 +137,16 @@ def test_calculate_profit_thresholds_all_zeros() -> None:
     thresholds = np.array([0.8, 0.5, 0.2], dtype=np.float32)
     result = calculate_profit_thresholds(tps, fns, fps, tns, thresholds)
     (
+        thresholds_out,
+        profits,
         maximum_profit,
         calibrated_maximum_profit,
         optimal_threshold,
         calibrated_optimal_threshold,
-        total_profit,
         precision,
         recall,
     ) = result
-    assert np.all(total_profit == 0)
+    assert np.all(profits == 0)
     assert maximum_profit == 0
     assert isinstance(optimal_threshold, float)
     assert precision == 0
