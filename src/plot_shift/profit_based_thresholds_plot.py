@@ -42,20 +42,20 @@ def plot_profit_thresholds(
         thresholds,
         total_profits,
         marker="o",
-        color="blue",
+        color="#1F77B4",
         linestyle="-",
     )
     ax.plot(
         thresholds,
         total_profits,
         linestyle="-",
-        color="blue",
+        color="#1F77B4",
         linewidth=4,
         label="Total Expected Profit",
     )
     ax.axvline(
         optimal_threshold,
-        color="r",
+        color="#F0534F",
         linestyle="--",
         label=f"Optimal Threshold: {optimal_threshold:.2f}",
     )
